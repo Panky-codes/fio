@@ -63,6 +63,7 @@
 #define FIO_HAVE_PWRITEV2
 #define FIO_HAVE_SHM_ATTACH_REMOVED
 #define FIO_HAVE_RWF_ATOMIC
+#define FIO_HAVE_RWF_WRITETHROUGH
 
 #ifdef MAP_HUGETLB
 #define FIO_HAVE_MMAP_HUGE
@@ -335,6 +336,10 @@ static inline int fio_set_sched_idle(void)
 
 #ifndef RWF_DONTCACHE
 #define RWF_DONTCACHE	0x00000080
+#endif
+
+#ifndef RWF_WRITETHROUGH
+#define RWF_WRITETHROUGH	0x00000200
 #endif
 
 #ifndef RWF_WRITE_LIFE_SHIFT

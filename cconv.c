@@ -173,6 +173,7 @@ int convert_thread_options_to_cpu(struct thread_options *o,
 	o->file_lock_mode = le32_to_cpu(top->file_lock_mode);
 	o->odirect = le32_to_cpu(top->odirect);
 	o->oatomic = le32_to_cpu(top->oatomic);
+	o->writethrough = le32_to_cpu(top->writethrough);
 	o->invalidate_cache = le32_to_cpu(top->invalidate_cache);
 	o->create_serialize = le32_to_cpu(top->create_serialize);
 	o->create_fsync = le32_to_cpu(top->create_fsync);
@@ -455,6 +456,7 @@ void convert_thread_options_to_net(struct thread_options_pack *top,
 	top->file_lock_mode = cpu_to_le32(o->file_lock_mode);
 	top->odirect = cpu_to_le32(o->odirect);
 	top->oatomic = cpu_to_le32(o->oatomic);
+	top->writethrough = cpu_to_le32(o->writethrough);
 	top->invalidate_cache = cpu_to_le32(o->invalidate_cache);
 	top->create_serialize = cpu_to_le32(o->create_serialize);
 	top->create_fsync = cpu_to_le32(o->create_fsync);

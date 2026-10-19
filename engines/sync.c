@@ -185,6 +185,8 @@ static enum fio_q_status fio_pvsyncio2_queue(struct thread_data *td,
 	else if (io_u->ddir == DDIR_WRITE) {
 		if (td->o.oatomic)
 			flags |= RWF_ATOMIC;
+		if (td->o.writethrough)
+			flags |= RWF_WRITETHROUGH;
 		ret = pwritev2(f->fd, iov, 1, io_u->offset, flags);
 	} else if (io_u->ddir == DDIR_TRIM) {
 		do_io_u_trim(td, io_u);
@@ -485,7 +487,8 @@ static struct ioengine_ops ioengine_pvrw2 = {
 	.open_file	= generic_open_file,
 	.close_file	= generic_close_file,
 	.get_file_size	= generic_get_file_size,
-	.flags		= FIO_SYNCIO | FIO_ATOMICWRITES | FIO_SYNCFS,
+	.flags		= FIO_SYNCIO | FIO_ATOMICWRITES | FIO_SYNCFS |
+			  FIO_WRITETHROUGH,
 	.options	= options,
 	.option_struct_size	= sizeof(struct psyncv2_options),
 };

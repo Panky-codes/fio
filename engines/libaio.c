@@ -145,6 +145,10 @@ static int fio_libaio_prep(struct thread_data *td, struct io_u *io_u)
 		if (td->o.oatomic)
 			iocb->aio_rw_flags |= RWF_ATOMIC;
 #endif
+#ifdef FIO_HAVE_RWF_WRITETHROUGH
+		if (td->o.writethrough)
+			iocb->aio_rw_flags |= RWF_WRITETHROUGH;
+#endif
 	} else if (ddir_sync(io_u->ddir))
 		io_prep_fsync(iocb, f->fd);
 
@@ -461,7 +465,8 @@ FIO_STATIC struct ioengine_ops ioengine = {
 	.flags			= FIO_ASYNCIO_SYNC_TRIM |
 					FIO_ASYNCIO_SYNC_SYNCFS |
 					FIO_ASYNCIO_SETS_ISSUE_TIME |
-					FIO_ATOMICWRITES,
+					FIO_ATOMICWRITES |
+					FIO_WRITETHROUGH,
 	.init			= fio_libaio_init,
 	.post_init		= fio_libaio_post_init,
 	.prep			= fio_libaio_prep,

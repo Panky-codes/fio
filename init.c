@@ -972,6 +972,23 @@ static int fixup_options(struct thread_data *td)
 			td->o.oatomic = 0;
 	}
 
+	if (td->o.writethrough) {
+		if (!td_ioengine_flagged(td, FIO_WRITETHROUGH)) {
+			log_err("fio: engine does not support writethrough\n");
+			td->o.writethrough = 0;
+			ret |= 1;
+		}
+
+		if (td->o.odirect) {
+			log_err("fio: writethrough is for buffered IO, can't be used with direct=1\n");
+			td->o.writethrough = 0;
+			ret |= 1;
+		}
+
+		if (!td_write(td))
+			td->o.writethrough = 0;
+	}
+
 	if (o->pre_read) {
 		if (o->invalidate_cache)
 			o->invalidate_cache = 0;

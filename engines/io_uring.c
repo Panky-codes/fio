@@ -1043,6 +1043,8 @@ static int fio_ioring_prep(struct thread_data *td, struct io_u *io_u)
 			sqe->rw_flags |= RWF_NOWAIT;
 		if (td->o.oatomic && io_u->ddir == DDIR_WRITE)
 			sqe->rw_flags |= RWF_ATOMIC;
+		if (td->o.writethrough && io_u->ddir == DDIR_WRITE)
+			sqe->rw_flags |= RWF_WRITETHROUGH;
 
 		/*
 		 * Since io_uring can have a submission context (sqthread_poll)
@@ -2735,7 +2737,8 @@ static struct ioengine_ops ioengine_uring = {
 	.name			= "io_uring",
 	.version		= FIO_IOOPS_VERSION,
 	.flags			= FIO_NO_OFFLOAD | FIO_ASYNCIO_SETS_ISSUE_TIME |
-				  FIO_ATOMICWRITES | FIO_SKIPPABLE_IOMEM_ALLOC,
+				  FIO_ATOMICWRITES | FIO_SKIPPABLE_IOMEM_ALLOC |
+				  FIO_WRITETHROUGH,
 	.init			= fio_ioring_init,
 	.post_init		= fio_ioring_post_init,
 	.iomem_alloc		= fio_ioring_iomem_alloc,

@@ -2717,6 +2717,17 @@ with the caveat that when used on the command line, they must come after the
 	not support torn-write protection. To learn a file's torn-write limits, issue
 	statx with STATX_WRITE_ATOMIC.
 
+.. option:: writethrough=bool : [pvsync2] [libaio] [io_uring]
+
+	Issue buffered writes with the RWF_WRITETHROUGH flag. The data is copied
+	into the page cache and written to the device right away, and the write
+	completes once the data has been written. Only valid for buffered I/O, so
+	it can't be combined with :option:`direct`.
+
+	Combined with :option:`atomic`, this does buffered atomic writes. These
+	are limited to the buffered atomic write unit of the file, which can be
+	queried with statx STATX_WRITE_ATOMIC_BUF.
+
 .. option:: libaio_vectored=bool : [libaio]
 
     Submit vectored read and write requests.

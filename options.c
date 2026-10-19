@@ -3156,6 +3156,18 @@ struct fio_option fio_options[FIO_MAX_OPTS] = {
 		.group	= FIO_OPT_G_IO_TYPE,
 	},
 #endif
+#ifdef FIO_HAVE_RWF_WRITETHROUGH
+	{
+		.name	= "writethrough",
+		.lname	= "Writethrough I/O",
+		.type	= FIO_OPT_BOOL,
+		.off1	= offsetof(struct thread_options, writethrough),
+		.help	= "Use RWF_WRITETHROUGH for buffered writes",
+		.def	= "0",
+		.category = FIO_OPT_C_IO,
+		.group	= FIO_OPT_G_IO_TYPE,
+	},
+#endif
 	{
 		.name	= "buffered",
 		.lname	= "Buffered I/O",

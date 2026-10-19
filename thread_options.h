@@ -133,6 +133,7 @@ struct thread_options {
 
 	unsigned int odirect;
 	unsigned int oatomic;
+	unsigned int writethrough;
 	unsigned int invalidate_cache;
 	unsigned int create_serialize;
 	unsigned int create_fsync;
@@ -480,6 +481,7 @@ struct thread_options_pack {
 
 	uint32_t odirect;
 	uint32_t oatomic;
+	uint32_t writethrough;
 	uint32_t invalidate_cache;
 	uint32_t create_serialize;
 	uint32_t create_fsync;
@@ -544,7 +546,6 @@ struct thread_options_pack {
 
 	struct zone_split zone_split[DDIR_RWDIR_CNT][ZONESPLIT_MAX];
 	uint32_t zone_split_nr[DDIR_RWDIR_CNT];
-	uint32_t pad3;
 
 	fio_fp64_t zipf_theta;
 	fio_fp64_t pareto_h;
